@@ -18,7 +18,7 @@ class Name {
     }
     let parsed = string;
     while(parsed.length > 0) {
-      if(!NAME_SYMBOLS.includes(parsed[0])) {
+      if(!Constants.NAME_SYMBOLS.includes(parsed[0])) {
         return null;
       }
       parsed = parsed.substr(1);

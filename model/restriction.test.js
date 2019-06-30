@@ -24,3 +24,20 @@ test('Parses ok', () => {
   expect(Restriction.parse('(x)0', Parser.parse))
     .toStrictEqual(new Restriction(new Name('x'), new Inaction()));
 });
+test('Gets names', () => {
+  expect(Restriction.parse('(a)(b)c(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c'), new Name('d')]));
+  expect(Restriction.parse('(a)(b)c(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('c')]));
+  expect(Restriction.parse('(a)(b)c(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('d')]));
+});
+test('Gets names with repeated names', () => {
+  console.log(Restriction.parse('(a)(c)c(d).0', Parser.parse).n())
+  expect(Restriction.parse('(a)(c)c(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('c'), new Name('d')]));
+  expect(Restriction.parse('(a)(c)c(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([]));
+  expect(Restriction.parse('(a)(c)c(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('a'), new Name('c'), new Name('d')]));
+});

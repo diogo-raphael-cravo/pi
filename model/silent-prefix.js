@@ -40,6 +40,15 @@ class SilentPrefix extends Prefix {
     }
     return new SilentPrefix(proc);
   }
+  n() {
+    return this.process.n();
+  }
+  fn() {
+    return this.process.fn();
+  }
+  bn() {
+    return this.process.bn();
+  }
 }
 
 module.exports = SilentPrefix;

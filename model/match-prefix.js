@@ -50,6 +50,15 @@ class MatchPrefix extends Prefix {
     }
     return new MatchPrefix(lhs, rhs, proc);
   }
+  n() {
+    return Name.uniqueSet([...new Set([this.lhs, this.rhs]), ...this.process.n()]);
+  }
+  fn() {
+    return Name.uniqueSet([...new Set([this.lhs, this.rhs]), ...this.process.fn()]);
+  }
+  bn() {
+    return this.process.bn();
+  }
 }
 
 module.exports = MatchPrefix;

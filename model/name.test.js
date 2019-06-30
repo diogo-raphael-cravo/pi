@@ -14,3 +14,7 @@ test('Parses ok', () => {
   expect(Name.parse('as92ndas2', Parser.parse))
     .toStrictEqual(new Name('as92ndas2'));
 });
+test('Makes unique set', () => {
+  expect(Name.uniqueSet([new Name('a'), new Name('b'), new Name('a')], Parser.parse))
+    .toStrictEqual(new Set([new Name('a'), new Name('b')]));
+});

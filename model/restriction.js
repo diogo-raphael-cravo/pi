@@ -40,6 +40,16 @@ class Restriction extends Process {
     }
     return new Restriction(name, proc);
   }
+  n() {
+    return Name.uniqueSet([...this.process.n()].concat([this.variable]));
+  }
+  fn() {
+    return Name.uniqueSet([...this.process.fn()]
+      .filter(i => !i.equals(this.variable)));
+  }
+  bn() {
+    return Name.uniqueSet([...this.process.bn(), this.variable]);
+  }
 }
 
 module.exports = Restriction;

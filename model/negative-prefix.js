@@ -49,6 +49,15 @@ class NegativePrefix extends Prefix {
     }
     return new NegativePrefix(channel, subject, proc);
   }
+  n() {
+    return Name.uniqueSet([this.channel, this.subject, ...this.process.n()]);
+  }
+  fn() {
+    return Name.uniqueSet([this.channel, this.subject, ...this.process.fn()]);
+  }
+  bn() {
+    return this.process.bn();
+  }
 }
 
 module.exports = NegativePrefix;

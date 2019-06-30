@@ -33,6 +33,15 @@ class Replication extends Process {
     }
     return new Replication(proc);
   }
+  n() {
+    return this.process.n();
+  }
+  fn() {
+    return this.process.fn();
+  }
+  bn() {
+    return this.process.bn();
+  }
 }
 
 module.exports = Replication;

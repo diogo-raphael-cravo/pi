@@ -19,6 +19,15 @@ class Inaction extends Process {
     }
     return new Inaction();
   }
+  n() {
+    return new Set([]);
+  }
+  fn() {
+    return new Set([]);
+  }
+  bn() {
+    return new Set([]);
+  }
 }
 
 module.exports = Inaction;

@@ -46,6 +46,17 @@ class PositivePrefix extends Prefix {
     }
     return new PositivePrefix(channel, subject, proc);
   }
+  n() {
+    return Name.uniqueSet([this.channel, this.subject, ...this.process.n()]);
+  }
+  fn() {
+    return Name.uniqueSet([...this.process.fn(), this.channel]
+      .filter(i => !i.equals(this.subject)));
+  }
+  bn() {
+    return Name.uniqueSet([...this.process.bn(), this.subject]
+      .filter(i => !i.equals(this.channel)));
+  }
 }
 
 module.exports = PositivePrefix;

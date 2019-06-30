@@ -2,6 +2,7 @@
 
 const Constants = require('./constants');
 const Process = require('./process');
+const Name = require('./name');
 
 class Summation extends Process {
   static SUM() {
@@ -38,6 +39,15 @@ class Summation extends Process {
       return Constants.DOES_NOT_PARSE;
     }
     return new Summation(lhs, rhs);
+  }
+  n() {
+    return Name.uniqueSet([...this.lhs.n(), ...this.rhs.n()]);
+  }
+  fn() {
+    return Name.uniqueSet([...this.lhs.fn(), ...this.rhs.fn()]);
+  }
+  bn() {
+    return Name.uniqueSet([...this.lhs.bn(), ...this.rhs.bn()]);
   }
 }
 

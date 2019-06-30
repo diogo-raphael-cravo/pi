@@ -29,3 +29,11 @@ test('Parses ok', () => {
   expect(NegativePrefix.parse('x y.0', Parser.parse))
     .toStrictEqual(new NegativePrefix(new Name('x'), new Name('y'), new Inaction()));
 });
+test('Gets names', () => {
+  expect(NegativePrefix.parse('a b.c(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c'), new Name('d')]));
+  expect(NegativePrefix.parse('a b.c(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c')]));
+  expect(NegativePrefix.parse('a b.c(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('d')]));
+});

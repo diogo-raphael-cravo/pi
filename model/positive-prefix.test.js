@@ -34,3 +34,33 @@ test('Parses ok', () => {
   expect(PositivePrefix.parse('x(y).0', Parser.parse))
     .toStrictEqual(new PositivePrefix(new Name('x'), new Name('y'), new Inaction()));
 });
+test('Gets names', () => {
+  expect(PositivePrefix.parse('a(b).c(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c'), new Name('d')]));
+  expect(PositivePrefix.parse('a(b).c(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a'), new Name('c')]));
+  expect(PositivePrefix.parse('a(b).c(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('b'), new Name('d')]));
+});
+test('Gets names with repeated names', () => {
+  expect(PositivePrefix.parse('a(b).b(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('d')]));
+  expect(PositivePrefix.parse('a(b).b(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a')]));
+  expect(PositivePrefix.parse('a(b).b(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('b'), new Name('d')]));
+
+  expect(PositivePrefix.parse('a(b).a(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('d')]));
+  expect(PositivePrefix.parse('a(b).a(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a')]));
+  expect(PositivePrefix.parse('a(b).a(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('b'), new Name('d')]));
+
+  expect(PositivePrefix.parse('a(b).d(a).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('d')]));
+  expect(PositivePrefix.parse('a(b).d(a).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a'), new Name('d')]));
+  expect(PositivePrefix.parse('a(b).d(a).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('b')]));
+});

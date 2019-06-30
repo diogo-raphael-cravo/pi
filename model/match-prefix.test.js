@@ -28,3 +28,11 @@ test('Does not parse excess delimiters', () => {
 test('Parses ok', () => {
   expect(MatchPrefix.parse('[x=y].0', Parser.parse)).toStrictEqual(new MatchPrefix(new Name('x'), new Name('y'), new Inaction()));
 });
+test('Gets names', () => {
+  expect(MatchPrefix.parse('[a=b].c(d).0', Parser.parse).n())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c'), new Name('d')]));
+  expect(MatchPrefix.parse('[a=b].c(d).0', Parser.parse).fn())
+    .toStrictEqual(new Set([new Name('a'), new Name('b'), new Name('c')]));
+  expect(MatchPrefix.parse('[a=b].c(d).0', Parser.parse).bn())
+    .toStrictEqual(new Set([new Name('d')]));
+});

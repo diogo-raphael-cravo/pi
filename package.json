@@ -1,0 +1,27 @@
+{
+  "name": "pi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diogo-raphael-cravo/pi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diogo-raphael-cravo/pi/issues"
+  },
+  "homepage": "https://github.com/diogo-raphael-cravo/pi#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "24.8.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  }
+}

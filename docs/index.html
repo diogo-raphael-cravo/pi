@@ -1,10 +1,40 @@
 <html>
   <head>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
-    PI
-    <script type="text/javascript" src="bundle.js">
-    console.log(Parser);
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-text-field mdc-text-field--textarea mdc-layout-grid__cell--span-12">
+          <textarea id="textarea" class="mdc-text-field__input" rows="4" placeholder="Write a pi term here"></textarea>
+          <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__trailing"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell--span-6">
+          <button class="foo-button mdc-button">Button</button>
+        </div>
+        <div class="mdc-layout-grid__cell--span-2">
+          <button class="foo-button mdc-button">Button</button>
+        </div>
+        <div class="mdc-layout-grid__cell--span-4">
+          <button class="foo-button mdc-button">Button</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./bundle.js"></script>
+    <script type="text/javascript">
+      //mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+      mdc.ripple.MDCRipple.attachTo(document.querySelector('textarea'));
+      document.querySelector('.foo-button').onclick = function click() {
+        console.log(pi);
+      }
     </script>
   </body>
 </html>

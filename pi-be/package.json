@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "jest --coverage",
-    "bundle": "browserify --standalone pi ./model/parser.js -o ../pi-fe/pi-be-bundle.js"
+    "bundle": "browserify --standalone pi ./main.js -o ../pi-fe/public/pi-be-bundle.js"
   },
   "repository": {
     "type": "git",

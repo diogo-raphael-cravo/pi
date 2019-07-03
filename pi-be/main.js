@@ -1,25 +1,9 @@
 'use strict';
 
-/************************************
- * Syntax
- ************************************/
-
-function n(proc) {
-  if (proc instanceof Process) {
-    return proc.n();
-  }
-}
-function fn(proc) {
-  if (proc instanceof Process) {
-    return proc.fn();
-  }
-}
-function bn(proc) {
-  if (proc instanceof Process) {
-    return proc.bn();
-  }
-}
+const Constants = require('./model/constants');
+const Parser = require('./model/parser');
 
 module.exports = {
+  Constants,
   Parser,
 };

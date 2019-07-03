@@ -1,6 +1,16 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pi = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
+const Constants = require('./model/constants');
+const Parser = require('./model/parser');
+
+module.exports = {
+  Constants,
+  Parser,
+};
+},{"./model/constants":3,"./model/parser":8}],2:[function(require,module,exports){
+'use strict';
+
 const Constants = require('./constants');
 const Process = require('./process');
 const Name = require('./name');
@@ -53,7 +63,7 @@ class Composition extends Process {
 }
 
 module.exports = Composition;
-},{"./constants":2,"./name":5,"./process":10}],2:[function(require,module,exports){
+},{"./constants":3,"./name":6,"./process":11}],3:[function(require,module,exports){
 'use strict';
 
 module.exports = {};
@@ -62,7 +72,7 @@ module.exports.UNICODE_TAU = '\u03C4';
 module.exports.SPACE = ' ';
 module.exports.NAME_SYMBOLS = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
 module.exports.DOES_NOT_PARSE = null;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -96,7 +106,7 @@ class Inaction extends Process {
 }
 
 module.exports = Inaction;
-},{"./constants":2,"./process":10}],4:[function(require,module,exports){
+},{"./constants":3,"./process":11}],5:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -161,7 +171,7 @@ class MatchPrefix extends Prefix {
 }
 
 module.exports = MatchPrefix;
-},{"./constants":2,"./name":5,"./prefix":9,"./process":10}],5:[function(require,module,exports){
+},{"./constants":3,"./name":6,"./prefix":10,"./process":11}],6:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -204,7 +214,7 @@ class Name {
 }
 
 module.exports = Name;
-},{"./constants":2}],6:[function(require,module,exports){
+},{"./constants":3}],7:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -229,7 +239,7 @@ class NegativePrefix extends Prefix {
     this.process = proc;
   }
   print() {
-    return `${this.channel.print()}${UNICODE_OVERLINE}${this.subject.print()}${Prefix.PREFIX_DELIMITER()}${this.process.print()}`;
+    return `${this.channel.print()}${Constants.UNICODE_OVERLINE}${this.subject.print()}${Prefix.PREFIX_DELIMITER()}${this.process.print()}`;
   }
   static parse(string, parser) {
     if (!string || !parser) {
@@ -268,7 +278,7 @@ class NegativePrefix extends Prefix {
 }
 
 module.exports = NegativePrefix;
-},{"./constants":2,"./name":5,"./prefix":9,"./process":10}],7:[function(require,module,exports){
+},{"./constants":3,"./name":6,"./prefix":10,"./process":11}],8:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -307,7 +317,7 @@ class Parser {
 }
 
 module.exports = Parser;
-},{"./composition":1,"./constants":2,"./inaction":3,"./match-prefix":4,"./negative-prefix":6,"./positive-prefix":8,"./replication":11,"./restriction":12,"./silent-prefix":13,"./summation":14}],8:[function(require,module,exports){
+},{"./composition":2,"./constants":3,"./inaction":4,"./match-prefix":5,"./negative-prefix":7,"./positive-prefix":9,"./replication":12,"./restriction":13,"./silent-prefix":14,"./summation":15}],9:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -370,7 +380,7 @@ class PositivePrefix extends Prefix {
 }
 
 module.exports = PositivePrefix;
-},{"./constants":2,"./name":5,"./prefix":9,"./process":10}],9:[function(require,module,exports){
+},{"./constants":3,"./name":6,"./prefix":10,"./process":11}],10:[function(require,module,exports){
 'use strict';
 
 const Process = require('./process');
@@ -382,13 +392,13 @@ class Prefix extends Process {
 }
 
 module.exports = Prefix;
-},{"./process":10}],10:[function(require,module,exports){
+},{"./process":11}],11:[function(require,module,exports){
 'use strict';
 
 class Process {}
 
 module.exports = Process;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -436,7 +446,7 @@ class Replication extends Process {
 }
 
 module.exports = Replication;
-},{"./constants":2,"./process":10}],12:[function(require,module,exports){
+},{"./constants":3,"./process":11}],13:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -492,7 +502,7 @@ class Restriction extends Process {
 }
 
 module.exports = Restriction;
-},{"./constants":2,"./name":5,"./process":10}],13:[function(require,module,exports){
+},{"./constants":3,"./name":6,"./process":11}],14:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -547,7 +557,7 @@ class SilentPrefix extends Prefix {
 }
 
 module.exports = SilentPrefix;
-},{"./constants":2,"./prefix":9,"./process":10}],14:[function(require,module,exports){
+},{"./constants":3,"./prefix":10,"./process":11}],15:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -602,5 +612,5 @@ class Summation extends Process {
 }
 
 module.exports = Summation;
-},{"./constants":2,"./name":5,"./process":10}]},{},[7])(7)
+},{"./constants":3,"./name":6,"./process":11}]},{},[1])(1)
 });

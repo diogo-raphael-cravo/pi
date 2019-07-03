@@ -22,7 +22,7 @@ class NegativePrefix extends Prefix {
     this.process = proc;
   }
   print() {
-    return `${this.channel.print()}${UNICODE_OVERLINE}${this.subject.print()}${Prefix.PREFIX_DELIMITER()}${this.process.print()}`;
+    return `${this.channel.print()}${Constants.UNICODE_OVERLINE}${this.subject.print()}${Prefix.PREFIX_DELIMITER()}${this.process.print()}`;
   }
   static parse(string, parser) {
     if (!string || !parser) {

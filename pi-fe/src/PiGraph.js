@@ -45,10 +45,10 @@ class PiGraph extends Component {
     }
     const graph = this.props.term.toGraph(0);
     return (<div>
-      <button onClick={() => this.changeDisplayDirection('LR')}>LR</button>
+      {/* <button onClick={() => this.changeDisplayDirection('LR')}>LR</button>
       <button onClick={() => this.changeDisplayDirection('RL')}>RL</button>
       <button onClick={() => this.changeDisplayDirection('UD')}>UD</button>
-      <button onClick={() => this.changeDisplayDirection('DU')}>DU</button>
+      <button onClick={() => this.changeDisplayDirection('DU')}>DU</button> */}
       <Graph
         style={{border: '1px solid black'}}
         graph={graph}

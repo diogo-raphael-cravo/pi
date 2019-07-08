@@ -14,8 +14,8 @@ class Syntax extends Component {
 
   render() {
     return (
-      <div onClick={() => this.toggleHide()}>
-        <b>Syntax (click to {this.state.hidden? 'show' : 'hide'})</b>
+      <div>
+        <b onClick={() => this.toggleHide()}>Syntax (click to {this.state.hidden? 'show' : 'hide'})</b>
         <table style={this.state.hidden? {display:'none'} : {}}>
           <thead>
             <tr>

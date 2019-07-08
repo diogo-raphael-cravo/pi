@@ -58,6 +58,20 @@ class NegativePrefix extends Prefix {
   bn() {
     return this.process.bn();
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${this.channel.print()}${Constants.UNICODE_OVERLINE}${this.subject.print()}`,
+        title: 'Negative prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = NegativePrefix;

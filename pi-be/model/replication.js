@@ -42,6 +42,20 @@ class Replication extends Process {
   bn() {
     return this.process.bn();
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${Replication.REPLICATION()}`,
+        title: 'Replication',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = Replication;

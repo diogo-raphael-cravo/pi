@@ -60,6 +60,25 @@ class Composition extends Process {
   bn() {
     return Name.uniqueSet([...this.lhs.bn(), ...this.rhs.bn()]);
   }
+  toGraph(id) {
+    const lhs = this.lhs.toGraph(id + 1);
+    const greatest = Process.greatestIndex(lhs.nodes.map(x => x.id));
+    const rhs = this.rhs.toGraph(greatest + 1);
+    return {
+      nodes: [{
+        id, 
+        label: Composition.COMPOSITION(),
+        title: 'Composition',
+      }].concat(lhs.nodes).concat(rhs.nodes),
+      edges: [{
+        from: id,
+        to: id + 1
+      }, {
+        from: id,
+        to: greatest + 1,
+      }].concat(lhs.edges).concat(rhs.edges),
+    };
+  }
 }
 
 module.exports = Composition;
@@ -102,6 +121,16 @@ class Inaction extends Process {
   }
   bn() {
     return new Set([]);
+  }
+  toGraph(id) {
+    return {
+      nodes: [{
+        id, 
+        label: Inaction.INACTION(),
+        title: 'Inaction',
+      }],
+      edges: [],
+    };
   }
 }
 
@@ -168,6 +197,20 @@ class MatchPrefix extends Prefix {
   bn() {
     return this.process.bn();
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `[${this.lhs.print()}=${this.rhs.print()}]`,
+        title: 'Match prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = MatchPrefix;
@@ -210,6 +253,12 @@ class Name {
   static uniqueSet(array) {
     const uniques = new Set(array.map(n => n.name));
     return new Set([...uniques].map(u => new Name(u)));
+  }
+  toGraph() {
+    return {
+      nodes: [],
+      edges: [],
+    };
   }
 }
 
@@ -274,6 +323,20 @@ class NegativePrefix extends Prefix {
   }
   bn() {
     return this.process.bn();
+  }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${this.channel.print()}${Constants.UNICODE_OVERLINE}${this.subject.print()}`,
+        title: 'Negative prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
   }
 }
 
@@ -377,6 +440,20 @@ class PositivePrefix extends Prefix {
     return Name.uniqueSet([...this.process.bn(), this.subject]
       .filter(i => !i.equals(this.channel)));
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${this.channel.print()}(${this.subject.print()})`,
+        title: 'Positive prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = PositivePrefix;
@@ -395,7 +472,16 @@ module.exports = Prefix;
 },{"./process":11}],11:[function(require,module,exports){
 'use strict';
 
-class Process {}
+class Process {
+  static greatestIndex(array) {
+    return array.reduce((prev, curr) => {
+      if (prev < curr) {
+        return curr;
+      }
+      return prev;
+    }, 0);
+  }
+}
 
 module.exports = Process;
 },{}],12:[function(require,module,exports){
@@ -442,6 +528,20 @@ class Replication extends Process {
   }
   bn() {
     return this.process.bn();
+  }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${Replication.REPLICATION()}`,
+        title: 'Replication',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
   }
 }
 
@@ -499,6 +599,20 @@ class Restriction extends Process {
   bn() {
     return Name.uniqueSet([...this.process.bn(), this.variable]);
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `(${this.variable.print()})`,
+        title: 'Restriction',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = Restriction;
@@ -554,6 +668,20 @@ class SilentPrefix extends Prefix {
   bn() {
     return this.process.bn();
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${UNICODE_TAU}`,
+        title: 'Silent prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = SilentPrefix;
@@ -608,6 +736,25 @@ class Summation extends Process {
   }
   bn() {
     return Name.uniqueSet([...this.lhs.bn(), ...this.rhs.bn()]);
+  }
+  toGraph(id) {
+    const lhs = this.lhs.toGraph(id + 1);
+    const greatest = Process.greatestIndex(lhs.nodes.map(x => x.id));
+    const rhs = this.rhs.toGraph(greatest + 1);
+    return {
+      nodes: [{
+        id, 
+        label: Summation.SUM(),
+        title: 'Summation',
+      }].concat(lhs.nodes).concat(rhs.nodes),
+      edges: [{
+        from: id,
+        to: id + 1
+      }, {
+        from: id,
+        to: greatest + 1,
+      }].concat(lhs.edges).concat(rhs.edges),
+    };
   }
 }
 

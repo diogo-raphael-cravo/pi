@@ -49,6 +49,25 @@ class Composition extends Process {
   bn() {
     return Name.uniqueSet([...this.lhs.bn(), ...this.rhs.bn()]);
   }
+  toGraph(id) {
+    const lhs = this.lhs.toGraph(id + 1);
+    const greatest = Process.greatestIndex(lhs.nodes.map(x => x.id));
+    const rhs = this.rhs.toGraph(greatest + 1);
+    return {
+      nodes: [{
+        id, 
+        label: Composition.COMPOSITION(),
+        title: 'Composition',
+      }].concat(lhs.nodes).concat(rhs.nodes),
+      edges: [{
+        from: id,
+        to: id + 1
+      }, {
+        from: id,
+        to: greatest + 1,
+      }].concat(lhs.edges).concat(rhs.edges),
+    };
+  }
 }
 
 module.exports = Composition;

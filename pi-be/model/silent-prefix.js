@@ -49,6 +49,20 @@ class SilentPrefix extends Prefix {
   bn() {
     return this.process.bn();
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${UNICODE_TAU}`,
+        title: 'Silent prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = SilentPrefix;

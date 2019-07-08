@@ -50,6 +50,20 @@ class Restriction extends Process {
   bn() {
     return Name.uniqueSet([...this.process.bn(), this.variable]);
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `(${this.variable.print()})`,
+        title: 'Restriction',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = Restriction;

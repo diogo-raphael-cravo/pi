@@ -28,6 +28,16 @@ class Inaction extends Process {
   bn() {
     return new Set([]);
   }
+  toGraph(id) {
+    return {
+      nodes: [{
+        id, 
+        label: Inaction.INACTION(),
+        title: 'Inaction',
+      }],
+      edges: [],
+    };
+  }
 }
 
 module.exports = Inaction;

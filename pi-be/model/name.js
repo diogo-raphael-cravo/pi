@@ -37,6 +37,12 @@ class Name {
     const uniques = new Set(array.map(n => n.name));
     return new Set([...uniques].map(u => new Name(u)));
   }
+  toGraph() {
+    return {
+      nodes: [],
+      edges: [],
+    };
+  }
 }
 
 module.exports = Name;

@@ -57,6 +57,20 @@ class PositivePrefix extends Prefix {
     return Name.uniqueSet([...this.process.bn(), this.subject]
       .filter(i => !i.equals(this.channel)));
   }
+  toGraph(id) {
+    const proc = this.process.toGraph(id + 1);
+    return {
+      nodes: [{
+        id, 
+        label: `${this.channel.print()}(${this.subject.print()})`,
+        title: 'Positive prefix',
+      }].concat(proc.nodes),
+      edges: [{
+        from: id,
+        to: id + 1,
+      }].concat(proc.edges),
+    };
+  }
 }
 
 module.exports = PositivePrefix;

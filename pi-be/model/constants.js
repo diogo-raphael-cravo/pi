@@ -6,3 +6,5 @@ module.exports.UNICODE_TAU = '\u03C4';
 module.exports.SPACE = ' ';
 module.exports.NAME_SYMBOLS = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
 module.exports.DOES_NOT_PARSE = null;
+module.exports.OPEN_PARENTHESIS = '{';
+module.exports.CLOSE_PARENTHESIS = '}';

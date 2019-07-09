@@ -24,8 +24,7 @@ test('Does not parse excess delimiters', () => {
 test('Parses ok', () => {
   expect(Restriction.parse('(x)0', Parser.parse))
     .toStrictEqual(new Restriction(new Name('x'), new Inaction()));
-    console.log(Restriction.parse('(x)(0|0)', Parser.parse))
-  expect(Restriction.parse('(x)(0|0)', Parser.parse))
+  expect(Restriction.parse('(x){0|0}', Parser.parse))
     .toStrictEqual(new Restriction(new Name('x'), new Composition(new Inaction(), new Inaction())));
 });
 test('Gets names', () => {

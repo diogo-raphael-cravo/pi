@@ -3,6 +3,7 @@ import PiGraph from './PiGraph';
 import TermInformation from './TermInformation';
 import Syntax from './Syntax';
 import Examples from './Examples';
+import ProofTree from './ProofTree';
 
 class PiApp extends Component {
   constructor(props) {
@@ -43,12 +44,11 @@ class PiApp extends Component {
     return (<div style={{margin: 10, display: 'flex', flexDirection: 'column'}}>
       <h1>Parser</h1>
       {parser}
-      {
-        term ? <div>
-          <h1>Prover</h1>
-          <p style={{fontSize: 20}}>Input: &nbsp; {term.print()}</p>
-        </div> : null
-      }
+      <div>
+        <h1>Prover</h1>
+        <p style={{fontSize: 20}}>Input: &nbsp; {term ? term.print() : ''}</p>
+        <ProofTree />
+      </div>
     </div>);
   }
 }

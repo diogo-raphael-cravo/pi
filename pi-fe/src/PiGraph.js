@@ -15,9 +15,8 @@ class PiGraph extends Component {
         layout: {
           hierarchical: {
             enabled: true,
-            levelSeparation: 50,
-            nodeSpacing: 50,
-            direction: 'LR'
+            direction: 'UD',
+            sortMethod: 'directed',
           }
         },
         edges: {
@@ -33,7 +32,6 @@ class PiGraph extends Component {
   changeDisplayDirection(direction) {
     let opts = this.state.options;
     opts.layout.hierarchical.direction = direction;
-    console.log(opts)
     this.setState({ options: opts });
   }
 

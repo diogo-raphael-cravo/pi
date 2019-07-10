@@ -3,12 +3,14 @@
 
 const Constants = require('./model/constants');
 const Parser = require('./model/parser');
+const Rules = require('./proof/rules');
 
 module.exports = {
   Constants,
   Parser,
+  Rules,
 };
-},{"./model/constants":3,"./model/parser":8}],2:[function(require,module,exports){
+},{"./model/constants":3,"./model/parser":8,"./proof/rules":17}],2:[function(require,module,exports){
 'use strict';
 
 const Constants = require('./constants');
@@ -821,5 +823,101 @@ class Summation extends Process {
 }
 
 module.exports = Summation;
-},{"./constants":3,"./name":6,"./process":11}]},{},[1])(1)
+},{"./constants":3,"./name":6,"./process":11}],16:[function(require,module,exports){
+'use strict';
+
+class Rule {
+	constructor(lhs, rhs) {
+		this.lhs = lhs;
+		this.rhs = rhs;
+	}
+}
+
+module.exports = Rule;
+},{}],17:[function(require,module,exports){
+'use strict';
+
+const SCReflRule = require('./sc-refl-rule');
+const SCMatRule = require('./sc-mat-rule');
+const SCSumAssocRule = require('./sc-sum-assoc-rule');
+
+module.exports = [
+  SCReflRule,
+  SCMatRule,
+  SCSumAssocRule,
+];
+},{"./sc-mat-rule":18,"./sc-refl-rule":19,"./sc-sum-assoc-rule":20}],18:[function(require,module,exports){
+'use strict';
+
+const Rule = require('./rule');
+const MatchPrefix = require('../model/match-prefix');
+
+class SCMatRule extends Rule {
+	static NAME() {
+		return 'SC-MAT';
+	}
+	static forward(lhs) {
+		if (!(lhs instanceof MatchPrefix)) {
+			throw new Error('SCMatRule FW lhs must be an instance of MatchPrefix');
+		}
+		if (!lhs.lhs.equals(lhs.rhs)) {
+			throw new Error('SCMatRule FW lhs names must be the same');
+		}
+		return new SCMatRule(lhs, lhs.process);
+	}
+	static backward(name, rhs) {
+		return new SCMatRule(new MatchPrefix(name, name, rhs), rhs);
+	}
+}
+
+module.exports = SCMatRule;
+},{"../model/match-prefix":5,"./rule":16}],19:[function(require,module,exports){
+'use strict';
+
+const Rule = require('./rule');
+const Process = require('../model/process');
+
+class SCReflRule extends Rule {
+  static NAME() {
+    return 'SC-REFL';
+  }
+  static forward(lhs) {
+    if (!(lhs instanceof Process)) {
+      throw new Error('SCReflRule FW lhs must be an instance of Process');
+    }
+    return new SCReflRule(lhs, lhs);
+  }
+  static backward(rhs) {
+    return SCReflRule.forward(rhs);
+  }
+}
+
+module.exports = SCReflRule;
+},{"../model/process":11,"./rule":16}],20:[function(require,module,exports){
+'use strict';
+
+const Rule = require('./rule');
+const Summation = require('../model/summation');
+
+class SCSumAssoc extends Rule {
+	static NAME() {
+		return 'SC-SUM-ASSOC';
+	}
+	static forward(process) {
+		if (!(process instanceof Summation)) {
+			throw new Error('SCSumAssoc FW process must be an instance of Summation');
+		}
+		if (!(process.rhs instanceof Summation)) {
+			throw new Error('SCSumAssoc FW rhs must be an instance of Summation');
+		}
+		return new SCSumAssoc(process, 
+			new Summation(new Summation(process.lhs, process.rhs.lhs), process.rhs.rhs));
+	}
+	static backward(name, rhs) {
+		return new SCMatRule(new MatchPrefix(name, name, rhs), rhs);
+	}
+}
+
+module.exports = SCSumAssoc;
+},{"../model/summation":15,"./rule":16}]},{},[1])(1)
 });

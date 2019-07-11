@@ -1,54 +1,26 @@
 import React, { Component } from 'react';
-import PiGraph from './PiGraph';
-import TermInformation from './TermInformation';
-import Syntax from './Syntax';
-import Examples from './Examples';
-import ProofTree from './ProofTree';
+import SyntaxAnalyser from './SyntaxAnalyser';
+import Prover from './Prover';
 
 class PiApp extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = { showProver: true };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.showProver = this.showProver.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  showProver(showProver) {
+    this.setState({ showProver });
   }
 
   render() {
-    const term = this.state.value === '' ? '' : global.pi.Parser.parse(this.state.value);
-
-    const parser = <div style={{display: 'flex', flexDirection: 'row'}}>
-      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-        <Examples />
-        <h2>Input</h2>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{display: 'flex', flexDirection: 'row'}}>
-            <textarea rows='5' cols='33' 
-              value={this.state.value}
-              onChange={this.handleChange}
-              style={{marginRight: 5}}/>
-            <TermInformation term={term}/>
-          </div>
-        </div>
-        <Syntax style={{margin: 10}}/>
-      </div>
-
-      <div style={{marginLeft: 5, display: 'flex', flexDirection: 'column', flex: 1}}>
-        <h2>Syntax tree</h2>
-        <PiGraph term={term}/>
-      </div>
-    </div>;
     return (<div style={{margin: 10, display: 'flex', flexDirection: 'column'}}>
-      <h1>Parser</h1>
-      {parser}
-      <div>
-        <h1>Prover</h1>
-        <p style={{fontSize: 20}}>Input: &nbsp; {term ? term.print() : ''}</p>
-        <ProofTree />
+      <div style={{ display: 'flex', flexDirection: 'row'}}>
+        <button disabled={!this.state.showProver} style={{ width: 200, marginRight: 10 }} onClick={() => this.showProver(false)}>Syntax Analyser</button>
+        <button disabled={this.state.showProver} style={{ width: 200 }} onClick={() => this.showProver(true)}>Prover</button>
       </div>
+      {this.state.showProver ? <Prover /> : <SyntaxAnalyser />}
     </div>);
   }
 }

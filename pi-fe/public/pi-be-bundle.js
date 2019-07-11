@@ -841,11 +841,16 @@ const SCReflRule = require('./sc-refl-rule');
 const SCMatRule = require('./sc-mat-rule');
 const SCSumAssocRule = require('./sc-sum-assoc-rule');
 
-module.exports = [
-  SCReflRule,
-  SCMatRule,
-  SCSumAssocRule,
-];
+module.exports = {
+  congruence: [
+    SCReflRule,
+  ],
+  structuralCongruence: [
+    SCMatRule,
+    SCSumAssocRule,
+  ],
+  reduction: [],
+};
 },{"./sc-mat-rule":18,"./sc-refl-rule":19,"./sc-sum-assoc-rule":20}],18:[function(require,module,exports){
 'use strict';
 

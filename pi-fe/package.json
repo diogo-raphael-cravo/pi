@@ -1,7 +1,8 @@
 {
   "name": "pi-fe",
   "version": "0.1.0",
-  "private": true,
+	"private": true,
+	"homepage": "./",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
